@@ -1,0 +1,47 @@
+{
+  "tradingPair": ["DAI", "USDT"],
+  "sellOrders": {
+    "data": [
+      {
+        "price": "408",
+        "amount": "1.0225",
+        "total": "550",
+        "weightage": 20
+      },
+      {
+        "price": "500",
+        "amount": "1.0225",
+        "total": "550",
+        "weightage": 40
+      },
+      {
+        "price": "900",
+        "amount": "1.0225",
+        "total": "550",
+        "weightage": 70
+      }
+    ]
+  },
+  "buyOrders": {
+    "data": [
+      {
+        "price": "408",
+        "amount": "1.0225",
+        "total": "550",
+        "weightage": 90
+      },
+      {
+        "price": "500",
+        "amount": "1.0225",
+        "total": "550",
+        "weightage": 40
+      },
+      {
+        "price": "900",
+        "amount": "1.0225",
+        "total": "550",
+        "weightage": 10
+      }
+    ]
+  }
+}
