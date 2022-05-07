@@ -22,7 +22,6 @@ const httpServer = createServer(app);
 
 // web socket server
 const webSocketServer = new Server(httpServer, {
-  serveClient: false,
   cors: {
     origin: corsOrigins,
   },
@@ -30,7 +29,6 @@ const webSocketServer = new Server(httpServer, {
 
 // web socket events handlers
 webSocketServer.on("connection", (socket) => {
-  console.log(`WS Started on port ${port}`);
   ordersBookHandler(webSocketServer, socket);
 });
 

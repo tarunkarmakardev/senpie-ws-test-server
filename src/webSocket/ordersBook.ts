@@ -3,9 +3,13 @@ import data from "../db/ordersBook.json";
 import { faker } from "@faker-js/faker";
 import { range } from "lodash";
 
-const generateMockOrdersBook = (): typeof data => {
+type TListOrderPayload = {
+  tradingPair: string[];
+};
+
+const generateMockOrdersBook = (payload: TListOrderPayload): typeof data => {
   const generateOrdersData = () =>
-    range(0, 4).map(() => ({
+    range(0, 5).map(() => ({
       price: faker.datatype.number(100).toString(),
       amount: faker.datatype.number(100).toString(),
       total: faker.datatype.number(100).toString(),
@@ -13,7 +17,7 @@ const generateMockOrdersBook = (): typeof data => {
     }));
 
   return {
-    tradingPair: [faker.datatype.string(3), faker.datatype.string(3)],
+    tradingPair: payload.tradingPair,
     buyOrders: {
       data: generateOrdersData(),
     },
@@ -29,20 +33,21 @@ const ordersBookMethods = {
 };
 
 let interval: NodeJS.Timer;
+const UPDATE_INTERVAL = 10000; /* ms */
 
 const ordersBook = (webSocketServer: Server, socket: Socket) => {
-  const listOrders = (payload: any, res: (data: any) => void) => {
-    res(generateMockOrdersBook());
-  };
-  if (interval) clearInterval(interval);
+  const listOrders = (payload: TListOrderPayload, res: (data: any) => void) => {
+    res(generateMockOrdersBook(payload));
+    if (interval) clearInterval(interval);
 
-  interval = setInterval(() => {
-    /* Emit this if Data is updated Or Polling to source API */
-    webSocketServer.emit(
-      ordersBookMethods.listUpdated,
-      generateMockOrdersBook()
-    );
-  }, 10000);
+    interval = setInterval(() => {
+      /* Emit this if Data is updated Or Polling to source API */
+      webSocketServer.emit(
+        ordersBookMethods.listUpdated,
+        generateMockOrdersBook(payload)
+      );
+    }, UPDATE_INTERVAL);
+  };
 
   socket.on(ordersBookMethods.list, listOrders);
 
