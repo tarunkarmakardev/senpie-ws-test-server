@@ -3,7 +3,7 @@ import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import getEnv from "./env";
-import { ordersBookHandler } from "./webSocket";
+import { ordersBookHandler, latestExecutionsHandler } from "./webSocket";
 
 // config
 const { port, corsOrigins } = getEnv();
@@ -30,6 +30,7 @@ const webSocketServer = new Server(httpServer, {
 // web socket events handlers
 webSocketServer.on("connection", (socket) => {
   ordersBookHandler(webSocketServer, socket);
+  latestExecutionsHandler(webSocketServer, socket);
 });
 
 // http server listener

@@ -9,7 +9,7 @@ type TListOrderPayload = {
 
 const generateMockOrdersBook = (payload: TListOrderPayload): typeof data => {
   const generateOrdersData = () =>
-    range(0, 5).map(() => ({
+    range(0, 6).map(() => ({
       price: faker.datatype.number(100).toString(),
       amount: faker.datatype.number(100).toString(),
       total: faker.datatype.number(100).toString(),
